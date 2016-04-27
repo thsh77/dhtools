@@ -1,0 +1,8 @@
+#!/bin/bash
+# Comment:  lowerCaseStrings
+# (1) Map upper-case characters to lower case.
+# (2) Isolate strings of non-white characters on separate lines.
+
+sed  'y/ABCDEFGHIJKLMNOPQRSTUVWXYZ/abcdefghijklmnopqrstuvwxyz/
+s/[^a-z][^a-z]*/\
+/g' $1
