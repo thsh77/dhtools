@@ -1,0 +1,3 @@
+#!/bin/bash
+# wordFrequencyCount
+./lowerCaseStrings $1 | ./countFrequencies - | sort -
