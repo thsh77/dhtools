@@ -6,6 +6,7 @@
 #
 # Usage:
 # 	wf [n]
+#	wf 10 < filename
 
 tr -cs A-Za-z\' '\n' |		#replace nonletters with newlines
   tr A-Z a-z |			#map upper- to lowercase
