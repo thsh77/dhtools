@@ -3,11 +3,9 @@
 # standard Unix spelling dictionaries, which can be overridden on the
 # command line.
 #
-...
 #
 # Usage:
-#       awk [-v Dictionaries="sysdict1 sysdict2 ..."] -f spell.awk --
-#       \
+#       awk [-v Dictionaries="sysdict1 sysdict2 ..."] -f spell.awk -- \
 #           [=suffixfile1 =suffixfile2 ...] [+dict1 +dict2 ...] \
 #           [-strip] [-verbose] [file(s)]
 
