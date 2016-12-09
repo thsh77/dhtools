@@ -1,0 +1,4 @@
+#!/bin/bash
+# mapToLowerCase -- only maps 
+
+sed 'y/ABCDEFGHIJKLMNOPQRSTUVWXYZÆØÅ/abcdefghijklmnopqrstuvwxyzæøå/' $1

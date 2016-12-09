@@ -1,5 +1,5 @@
 #!/bin/bash
-# countFrequencies (Counting strings of characters on lines.)
+# countFrequencies (Counting strings of characters on lines)
 awk '{ number[$0]++}
-    END { for (string in number) { print string , number[string]}}
+    END {for (string in number) {print string , number[string] }}
     ' $1

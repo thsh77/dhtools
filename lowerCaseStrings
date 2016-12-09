@@ -1,8 +1,14 @@
 #!/bin/bash
-# Comment:  lowerCaseStrings
+# Comment: lowerCaseStrings
 # (1) Map upper-case characters to lower case.
 # (2) Isolate strings of non-white characters on separate lines.
 
-sed  'y/ABCDEFGHIJKLMNOPQRSTUVWXYZ/abcdefghijklmnopqrstuvwxyz/
-s/[^a-z][^a-z]*/\
+# map all uppercase characters to lowercase
+
+sed 'y/ABCDEFGHIJKLMNOPQRSTUVWXYZÆØÅ/abcdefghijklmnopqrstuvwxyzæøå/
+
+# substitute everything except numbers, letters, and certain signs
+# with newlines
+
+s/[^0-9a-zæøå\.\/-][^0-9a-zæøå\.\/-]*/\
 /g' $1

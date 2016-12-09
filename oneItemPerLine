@@ -1,8 +1,11 @@
 #!/bin/bash
-# oneItemPerLine
+# oneItemPerLine -- normalizes text in word tokens, each of which on
+# its own line
 
-sed '/^[ 	]*$/d; 
-    s/^[ 	]*//; 
-    s/[ 	]*$//; 
+# first remove all white lines
+sed '/^[ 	]*$/d;
+# remove whitespace at the beginning and end of a line
+    s/^[ 	]*//; s/[ 	]*$//;
+# replace remaining strings of white characters with newlines
     s/[ 	][ 	]*/\
 /g' $1

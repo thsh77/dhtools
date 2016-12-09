@@ -17,12 +17,13 @@ END { report_exceptions( ) }
 
 function get_dictionaries( files, key)
 {
-  if ((Dictionaries =  = "") && ("DICTIONARIES" in ENVIRON))
+  if ((Dictionaries == "") && ("DICTIONARIES" in ENVIRON))
        Dictionaries = ENVIRON["DICTIONARIES"]
-  if (Dictionaries =  = "")     # Use default dictionary list
+  if (Dictionaries == "")     # Use default dictionary list
   {
-      DictionaryFiles["/usr/dict/words"]++
-      DictionaryFiles["/usr/local/share/dict/words.knuth"]++
+      #DictionaryFiles["/usr/dict/words"]++
+      #DictionaryFiles["/usr/local/share/dict/words.knuth"]++
+      DictionaryFiles["/Users/th/dev/dhtools/da-ro-2012.words"]
   }
   else # Use system dictionaries from command line
   {
@@ -64,7 +65,7 @@ function load_dictionaries( file, word)
 
 function load_suffixes( file, k, line, n, parts) 
 { 
-	if (NSuffixFiles > 0) > # load suffix regexps from files 
+	if (NSuffixFiles > 0) # load suffix regexps from files 
 	{ 
 		for (file in SuffixFiles) 
 		{ 
@@ -73,14 +74,13 @@ function load_suffixes( file, k, line, n, parts)
 				sub(" *#.*$", "", line) # strip comments 
 				sub("^[ \t]+", "", line) # strip leading whitespace
 			       	sub("[ \t]+$", "", line) # strip trailing whitespace 
-				if (line = = "") 
+				if (line == "") 
 					continue 
 				n = split(line, parts) 
 				Suffixes[parts[1]]++ 
 				Replacement[parts[1]] = parts[2] 
 				for (k = 3; k <= n; k++) 
-					Replacement[parts[1]] = Replacement[parts[1]] " " \ 
-						parts[k] 
+					Replacement[parts[1]] = Replacement[parts[1]] " " parts[k] 
 			} 
 			close(file) 
 		} 
@@ -110,7 +110,7 @@ function order_suffixes( i, j, key)
 
 function report_exceptions( key, sortpipe) 
 { 
-	sortpipe = Verbose ?  "sort -f -t: -u -k1,1 -k2n,2 -k3" : \ 
+	sortpipe = Verbose ?  "sort -f -t: -u -k1,1 -k2n,2 -k3" :  
 		 "sort -f -u -k1" 
 	for (key in Exception) 
 		print Exception[key] | sortpipe 
@@ -121,14 +121,15 @@ function scan_options( k)
 { 
 	for (k = 1; k < ARGC; k++) 
 	{ 
-		if (ARGV[k] = = "-strip") 
+		if (ARGV[k] == "-strip") 
 		{ 
 			ARGV[k] = "" 
 			Strip = 1 
 		} 
-		else if (ARGV[k] = = "-verbose") 
+		else if (ARGV[k] == "-verbose") 
 		{ 
-			ARGV[k] = "" Verbose = 1 
+			ARGV[k] = "" 
+			Verbose = 1 
 		} 
 		else if (ARGV[k] ~ /^=/) # suffix file 
 		{ 
@@ -144,18 +145,18 @@ function scan_options( k)
 	} 
 	
 	# Remove trailing empty arguments (for nawk) 
-	while ((ARGC > 0) > && > (ARGV[ARGC-1] > = > = > "")) 
+	while ((ARGC > 0) && (ARGV[ARGC-1] ==  "")) 
 		ARGC-- 
 } 
 	
 function spell_check_line( k, word) 
 { 
-	gsub(NonWordChars, " ") # eliminate nonword chars 
+	gsub(NonWordChars, " ") #eliminate nonword chars 
 	for (k = 1; k <= NF; k++) 
 	{ 
 		word = $k 
-		sub("^'+", "", word) # strip leading apostrophes 
-		sub("'+$", "", word) # strip trailing apostrophes 
+		sub("^'+", "", word) #strip leading apostrophes 
+		sub("'+$", "", word) #strip trailing apostrophes 
 		if (word != "") 
 			spell_check_word(word) 
 	} 
@@ -192,14 +193,14 @@ function strip_suffixes(word, wordlist, ending, k, n, regexp)
 		if (match(word, regexp)) 
 		{ 
 			word = substr(word, 1, RSTART - 1) 
-			if (Replacement[regexp] = = "") 
+			if (Replacement[regexp] == "") 
 				wordlist[word] = 1 
 			else 
 			{ 
 				split(Replacement[regexp], ending) 
 				for (n in ending) 
 				{ 
-					if (ending[n] = = "\"\"") 
+					if (ending[n] == "\"\"") 
 						ending[n] = "" 
 					wordlist[word ending[n]] = 1 
 				} 

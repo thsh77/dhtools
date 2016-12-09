@@ -1,0 +1,8 @@
+#!/bin/bash
+# eliminateList
+
+leaveOnlyWords $1 | oneItemPerLine |
+sed 's/[./-]/\\&/g
+     s/.*/s\/\\([^A-ZÆØÅa-zæøå]\\)&\\([^A-ZÆØÅa-zæøå]\\)\/\\1\\2\/g/
+    ' >$1.sed
+addBlanks $2 | sed -f $1.sed | adjustBlankTabs

@@ -1,0 +1,48 @@
+#!/bin/bash
+#
+# leaveOnlyWords -- is a utility for processing a text file so that only
+# words remain. This is particularly useful as a preprocessing method
+# before performing text analysis, e.g. topic modeling, on textual
+# data.
+#
+# Usage: leaveOnlyWords <filename>
+
+# First remove anything that isn't numbers, letters, period,
+# apostrophe, a slash or a hyphen 
+sed 's/[^0-9A-ZÆØÅa-zæøå.'\''/-][^0-9A-ZÆØÅa-zæøå.'\''/-]*/ /g
+
+# Tag abbreviations with underscore characters
+s/\([A-ZÆØÅa-zæøå][A-ZÆØÅa-zæøå]*\)\.\([A-ZÆØÅa-zæøå][A-ZÆØÅa-zæøå]*\)\./\1_\2_/g
+s/\([A-ZÆØÅa-zæøå][A-ZÆØÅa-zæøå]*_[A-ZÆØÅa-zæøå][A-ZÆØÅa-zæøå]*\)\./\1_/g
+
+# Retain abbreviations in names
+s/\( [A-ZÆØÅ]\)\./\1_/g
+
+# Retain a series of standard Danish abbreviations
+s/\([Cc]\)a\./\1a_/g; s/Chr\./Chr_/g; s/\([Dd]\)vs\./\1vs_/g
+s/\([Ee]\)l\./\1l_/g
+s/\([Hh]\)r\./\1r_/g; s/\([Hh]\)hv\./\1hv_/g
+s/\([Jj]\)f\./\1f_/g; s/\([Jj]\)vf\./\1vf_/g
+s/\([Kk]\)bh\./\1bh_/g; s/\([Kk]\)r\./\1r_/g; s/\([Ll]\)l\./\1l_/g 
+s/\([Mm]\)fl\./\1fl_/g
+s/\([Nn]\)r\./\1r_/g
+s/\([Oo]\)sv\./\1sv_/g
+s/\([Ss]\)dr\./\1dr_/g; s/\([Ss]\)kt\./\1kt_/g; s/\([Ss]\)t\./\1t_/g
+
+# Remove remaining period signs, and restore periods in abbreviations
+s/\./ /g; s/_/./g
+
+# First replace hyphen between words with underscore; then remove
+# remaining hyphens; finally restore hyphens between words
+# NB! Ranges are expanded with period to cope with cases like 
+# J.-J. Rousseau
+s/\([A-ZÆØÅa-zæøå\.]\)\-\([A-ZÆØÅa-zæøå\.]\)/\1_\2/g;	s/\-/ /g; s/_/-/g
+
+# First replace slash between words with underscore; then remove
+# remaining underscores; finally restore underscores between words
+s/\([A-ZÆØÅa-zæøå]\)\/\([A-ZÆØÅa-zæøå]\)/\1_\2/g;	s/\// /g; s/_/\//g
+
+# First replace apostrophe between words with underscores; then remove
+# remaning apostrophes; finally restore apostrophes between words
+s/\([0-9A-ZÆØÅa-zæøå]\)'\''\([A-ZÆØÅa-zæøå]\)/\1_\2/g;	s/'\''/ /g; s/_/'\''/g
+' $1

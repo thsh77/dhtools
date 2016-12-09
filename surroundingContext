@@ -1,0 +1,13 @@
+#!/bin/bash
+# surroundingContext -- is a problem for generating the surrounding
+# context for words from a text file $1. The second argument, $2, is
+# supposed to be a strictly positive integer. This integer sets the
+# context, i.e. two words are related if there are no more than $2
+# words between them
+# 
+# $ surroundingContext <filename> 6
+
+leaveOnlyWords $1 | oneItemPerLine | 
+mapToLowerCase | contextFinder - $2 |
+awk '{for (f=2;f<=NF;f++) { print $1, $(f) } }' | 
+countFrequencies 

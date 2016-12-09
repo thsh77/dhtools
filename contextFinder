@@ -1,0 +1,11 @@
+#!/bin/bash
+
+# context -- find word sequences in a tokenized file
+# $1 is the context length
+# $2 is the filename
+
+awk 'BEGIN 	{ cLength='$2'+0	}
+NR == 1		{ c=$0			}
+NR > 1		{ c=c " " $0		}
+NR > cLength	{ c=substr(c,index(c, " ")+1)}
+NR >= cLength	{ print c	}' $1

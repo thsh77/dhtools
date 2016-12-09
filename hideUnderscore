@@ -1,0 +1,6 @@
+#!/bin/bash
+# hideUnderscore -- will replace @ with @@, # by #@, and _ by ## in a
+# file
+
+sed 's/@/@@/g; s/#/#@/g; s/_/##/g' $1
+

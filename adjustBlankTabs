@@ -1,0 +1,4 @@
+#!/bin/bash
+# adjustBlankTabs
+
+sed 's/^[ 	]*//; s/[ 	]*$//; s/[ 	][ 	]*/ /g' $1
