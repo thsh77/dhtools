@@ -1,7 +1,7 @@
 #!/bin/bash
 #
 # leaveOnlyWords -- is a utility for processing a text file so that only
-# words remain. This is particularly useful as a preprocessing method
+# words remain. This is useful as a preprocessing method
 # before performing text analysis, e.g. topic modeling, on textual
 # data.
 #
